@@ -1,0 +1,84 @@
+---
+title: "HW 1"
+author: "Evan Dragich"
+date: "25 January 2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1.5
+
+### a
+
+$$
+\begin{aligned}
+A(4) &= 1000 \times (1 - 0.06 \times 4) \\
+&= 1000 \times (1.24) \\
+&= \$ 1240
+\end{aligned}
+$$
+
+### b
+
+$$
+\begin{aligned}
+A(4) &= 1000 \times (1 - 0.06 \times 4) \\
+&= 1000 \times (0.76) \\
+&= \$ 760
+\end{aligned}
+$$
+
+### c
+
+$$
+\begin{aligned}
+A(4) &= 1000 \times (1 + 0.06) ^ 4 \\
+&= 1000 \times (1.262) \\
+&= \$ 1262
+\end{aligned}
+$$
+
+### d
+
+$$
+\begin{aligned}
+r^{(4)} &= 0.06
+i(t) &= {1 + \frac{r^{(m)}}{m}}^ {m} - 1 \\
+&= {1 + \frac{0.06}{4}}^ {4} - 1 \\
+&= {1 + 0.015}^ {4} - 1 \\
+&= 0.0614
+A(4) &= 1000 \times (1 + 0.0614) ^ 4 \\
+&= 1000 \times (1.269) \\
+&= \$ 1269
+\end{aligned}
+$$
+
+### e
+
+$$
+\begin{aligned}
+d^{(12)} &= 0.06
+i(t) &= {1 - \frac{d^{(m)}}{m}}^ {-m} - 1 \\
+&= {1 - \frac{0.06}{12}}^ {-12} - 1 \\
+&= {1 - 0.005}^ {-12} - 1 \\
+&= 0.0620
+A(4) &= 1000 \times (1 + 0.0620) ^ 4 \\
+&= 1000 \times (1.272) \\
+&= \$ 1272
+\end{aligned}
+$$
+
+### f
+
+$$
+\begin{aligned}
+A(4) &= 1000 \times e ^ {\delta t} \\
+&= 1000 \times e ^ {0.06 \times 4} \\
+&= 1000 \times e ^ {0.24} \\
+&= 1000 \times (1.271) \\
+&= \$ 1271
+\end{aligned}
+$$
