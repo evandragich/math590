@@ -17,7 +17,7 @@ $$
 \begin{aligned}
 A(4) &= 1000 \times (1 - 0.06 \times 4) \\
 &= 1000 \times (1.24) \\
-&= \$ 1240
+&= \$ 1240.00
 \end{aligned}
 $$
 
@@ -27,7 +27,7 @@ $$
 \begin{aligned}
 A(4) &= 1000 \times (1 - 0.06 \times 4) \\
 &= 1000 \times (0.76) \\
-&= \$ 760
+&= \$ 760.00
 \end{aligned}
 $$
 
@@ -37,7 +37,7 @@ $$
 \begin{aligned}
 A(4) &= 1000 \times (1 + 0.06) ^ 4 \\
 &= 1000 \times (1.262) \\
-&= \$ 1262
+&= \$ 1262.48
 \end{aligned}
 $$
 
@@ -52,7 +52,7 @@ i(t) &= {1 + \frac{r^{(m)}}{m}}^ {m} - 1 \\
 &= 0.0614
 A(4) &= 1000 \times (1 + 0.0614) ^ 4 \\
 &= 1000 \times (1.269) \\
-&= \$ 1269
+&= \$ 1268.99
 \end{aligned}
 $$
 
@@ -67,7 +67,7 @@ i(t) &= {1 - \frac{d^{(m)}}{m}}^ {-m} - 1 \\
 &= 0.0620
 A(4) &= 1000 \times (1 + 0.0620) ^ 4 \\
 &= 1000 \times (1.272) \\
-&= \$ 1272
+&= \$ 1272.01
 \end{aligned}
 $$
 
@@ -79,6 +79,33 @@ A(4) &= 1000 \times e ^ {\delta t} \\
 &= 1000 \times e ^ {0.06 \times 4} \\
 &= 1000 \times e ^ {0.24} \\
 &= 1000 \times (1.271) \\
-&= \$ 1271
+&= \$ 1271.25
+\end{aligned}
+$$
+
+## 1.9
+
+### Present Value
+
+$$
+\begin{aligned}
+A(0) &= \sum_{i = 1}^{5}{C_{t} \times (1 + i)^{-t}} \\
+&= \sum_{i = 1}^{5}{C_{t} \times (1.02)^{-t}} \\
+&= 950 \times (1.02)^{0} + 800 \times (1.02)^{-1} + 150 \times (1.02)^{-2} + 400 \times (1.02)^{-3} + 120 \times (1.02)^{-4} \\
+&= 950 \times 1 + 800 \times 0.9804 + 150 \times 0.9612 + 400 \times 0.9423 + 120 \times 0.9239 \\
+&= 950 + 784.314 + 144.175 + 376.9289 + 110.8615 \\
+&= \$2366.28
+\end{aligned}
+$$
+
+### A(5)
+
+To calculate the value in 5 years, we could begin as above, and accumulate each cash flow individually to $t = 5$ rather thatn $t = 0$. However, it is equivalent to simply accumulate the sum as a whole.
+
+$$
+\begin{aligned}
+A(5) &= A(0) \times 1.02^5 \\
+&= \$2366.28 \times 1.10408 \\
+&= \$2612.56
 \end{aligned}
 $$
