@@ -2,7 +2,9 @@
 title: "HW 1"
 author: "Evan Dragich"
 date: "25 January 2022"
-output: pdf_document
+output: 
+  pdf_document: 
+    extra_dependencies: ["actuarialsymbol", "actuarialangle"]
 ---
 
 ```{r setup, include=FALSE}
@@ -195,3 +197,39 @@ t &=  5 \pm \sqrt{15}
 $$
 
 Given the constraint of $\text{2} \leq {t} \leq \text{10}$ for this equality, we find $t = 5 + \sqrt{15} = 8.873$. Thus, the two solutions are $t = \{0, 8.873\}$.
+
+# 2.5
+
+### a
+
+$$
+\begin{aligned}
+AV(750\ax{\angl{8}{4\%}}) &= 750\sum_{k = 0}^{7}(1.04)^k \\
+&= 750(9.21423) \\
+&= \$ 6910.67
+\end{aligned}
+$$
+
+### b
+
+$$
+\begin{aligned}
+i_{effective} &= 1.04^{2} - 1 \\
+&= 0.0816 \\
+AV(750\ax{\angl{8}{8.16\%}}) &= 750\sum_{k = 0}^{3}(1.0816)^k \\
+&= 750(3.25146) \\
+&= \$ 2438.59
+\end{aligned}
+$$
+
+### c
+
+$$
+\begin{aligned}
+i_{effective} &= 1.04^{\frac{1}{2}} - 1 \\
+&= 0.0198 \\
+AV(750\ax{\angl{8}{1.98\%}}) &= 750\sum_{k = 0}^{3}(1.08198)^k \\
+&= 750(8.57691) \\
+&= \$ 6432.68
+\end{aligned}
+$$
