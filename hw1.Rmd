@@ -130,3 +130,63 @@ A(5) - A(4)&= A(0) \times \int_{0}^{5} \frac{1}{10(1+t)^{3}}dt - A(0) \times \in
 &= \$ 0.0611
 \end{aligned}
 $$
+
+### 1.42
+
+$$
+\begin{aligned}
+a(t) = e^{\int_{0}^{t}\delta(s)ds}
+\end{aligned}
+$$
+
+To solve for $a_{x}(t) = a_{y}(t)$, we must equate:
+
+$$
+\begin{aligned}
+e^{\int_{0}^{t}\delta_{x}(s)ds} &= e^{\int_{0}^{t}\delta_{y}(s)ds} \\
+\int_{0}^{t}\delta_{x}(s)ds &= \int_{0}^{t}\delta_{y}(s)ds
+\end{aligned}
+$$
+
+From looking at the graph, $delta_{x}(s) = 0.1t$ and $delta_{y}(s) = 0.025t$ from $t \in (0, 2)$ and $0.05$ when $t > 2$
+
+Thus, integrating both functions to solve for the $t$ in which they are equal:
+
+$$
+\begin{aligned}
+\Delta_{x}(t) &= \int_{0}^{t}\delta_{x}(s)ds \\
+&= \int_{0}^{t}0.1(s)ds \\
+&= 0.05t^2
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\Delta_{y}(t) &= \int_{0}^{t}\delta_{y}(s)ds \\
+&= \int_{0}^{t}0.025(s)ds\text{ , 0 < t < 2} \\
+&\hphantom{=}\int_{0}^{2}0.025(s)ds+ \int_{2}^{t}0.05ds\text{  , t > 2} \\
+&= 0.0125t^{2}\text{ , 0 < t < 2} \\
+&\hphantom{=}0.05+ 0.05t-0.1\text{, t > 2} \\
+&= 0.0125t^{2}\text{ , 0 < t < 2} \\
+&\hphantom{=}-0.05+ 0.05t\text{, t > 2} \\
+\end{aligned}
+$$
+
+Thus, to solve for points where $0 < t < 2$, we must equate 
+
+$$
+\begin{aligned}
+0.05t^2 &= 0.0125t^2 \\
+t &= 0
+\end{aligned}
+$$
+
+To solve for points where $t > 2$, we must equate 
+
+$$
+\begin{aligned}
+0.05t^2 &= -0.05 + 0.05t \\
+0.05t^2 -0.05t + 0.05 &= 0 \\
+0.05(t^{2} - 1 + 1) \\
+\end{aligned}
+$$
