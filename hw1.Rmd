@@ -267,7 +267,7 @@ y &= x((1 + i)^{-1} + 1) \\ \\ \\
 \end{aligned}
 $$
 
-Thus, for $k = 1$, $\sx{\angl{kn}} = 1$, and for $k \geq 2$, $\sx{\angl{kn}} =x((\frac{y}{x} - 1)^{k - 1} + 1)$
+Thus, for $k = 1$, $\sx{\angl{kn}} = x$, and for $k \geq 2$, $\sx{\angl{kn}} =x((\frac{y}{x} - 1)^{k - 1} + 1)$
 
 ## 3.4
 
