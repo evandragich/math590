@@ -47,11 +47,11 @@ $$
 
 $$
 \begin{aligned}
-r^{(4)} &= 0.06
-i(t) &= {1 + \frac{r^{(m)}}{m}}^ {m} - 1 \\
+r^{(4)} &= 0.06 \\
+i(t) &= 1 + (\frac{r^{(m)}}{m})^ {m} - 1 \\
 &= {1 + \frac{0.06}{4}}^ {4} - 1 \\
 &= {1 + 0.015}^ {4} - 1 \\
-&= 0.0614
+&= 0.0614 \\ \\ \\
 A(4) &= 1000 \times (1 + 0.0614) ^ 4 \\
 &= 1000 \times (1.269) \\
 &= \$ 1268.99
@@ -62,11 +62,11 @@ $$
 
 $$
 \begin{aligned}
-d^{(12)} &= 0.06
-i(t) &= {1 - \frac{d^{(m)}}{m}}^ {-m} - 1 \\
+d^{(12)} &= 0.06 \\
+i(t) &= 1 - (\frac{d^{(m)}}{m})^ {-m} - 1 \\
 &= {1 - \frac{0.06}{12}}^ {-12} - 1 \\
 &= {1 - 0.005}^ {-12} - 1 \\
-&= 0.0620
+&= 0.0620 \\ \\ \\
 A(4) &= 1000 \times (1 + 0.0620) ^ 4 \\
 &= 1000 \times (1.272) \\
 &= \$ 1272.01
@@ -150,7 +150,7 @@ e^{\int_{0}^{t}\delta_{x}(s)ds} &= e^{\int_{0}^{t}\delta_{y}(s)ds} \\
 \end{aligned}
 $$
 
-From looking at the graph, $delta_{x}(s) = 0.1t$ and $delta_{y}(s) = 0.025t$ from $t \in (0, 2)$ and $0.05$ when $t > 2$
+Observing the graph, $\delta_{x}(s) = 0.1t$ for $t \in [0, 10]$ and $\delta_{y}(s) = 0.025t$ for $t \in [0, 2)$ and $0.05$ or $t \in [2, 10]$.
 
 Thus, integrating both functions to solve for the $t$ in which they are equal:
 
@@ -167,16 +167,16 @@ $$
 \Delta_{y}(t) &= \int_{0}^{t}\delta_{y}(s)ds \\
 &= \int_{0}^{t}0.025(s)ds\text{ , 0}\leq\text{t} \leq 2 \\
 &\hphantom{=}\int_{0}^{2}0.025(s)ds+ \int_{2}^{t}0.05ds\text{  , 2} \leq {t} \leq \text{10} \\
-&= 0.0125t^{2}\text{ , 0}\leq\text{t} \leq 2  \\
+&= 0.0125t^{2}\text{ , 0}\leq\text{t} < 2  \\
 &\hphantom{=}0.05+ 0.05t-0.1\text{  , 2} \leq {t} \leq \text{10}  \\
-&= 0.0125t^{2}\text{ , 0}\leq\text{t} \leq 2  \\
+&= 0.0125t^{2}\text{ , 0}\leq\text{t} < 2  \\
 &\hphantom{=}-0.05+ 0.05t\text{  , 2} \leq {t} \leq \text{10}  \\
-&= 0.0125t^{2}\text{ , 0}\leq\text{t} \leq 2  \\
+&= 0.0125t^{2}\text{ , 0}\leq\text{t} < 2  \\
 &\hphantom{=}0.05(t - 1) \text{  , 2} \leq {t} \leq \text{10}  \\
 \end{aligned}
 $$
 
-Thus, to solve for points where $0 \leq t \leq 2$, we must equate 
+Thus, to solve for points where $0 \leq t < 2$, we must equate 
 
 $$
 \begin{aligned}
@@ -306,7 +306,7 @@ To calculate $\sx**{\angl{4}}$, we could accumulate each cash flow individually,
 
 $$
 \begin{aligned}
-\sx**{\angl{4}} &= \ax**{\angl{4}}(1 + i_{1}^{S})^{3}) \\
+\sx**{\angl{4}} &= \ax**{\angl{4}}(1 + i_{1}^{S})^{3} \\
 &= 3.847(1.031)^{3} \\
 &= 4.215
 \end{aligned}
