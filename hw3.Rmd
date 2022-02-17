@@ -16,8 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 $$
 \begin{aligned}
 e_{x} &= \px{x}(1 + e_{x + 1}) \\
-e_{x} &= \sum_{k = 1}^{\infty} \px[k]{t} \\
-&= \px{x} + \sum_{k = 2}^{\infty}\px{x} \times \px[k - 1]{k + 1} \\
+e_{x} &= \sum_{k = 1}^{\infty} \px[k]{x} \\
 &= \px{x} + \sum_{k = 2}^{\infty}\px{x} \times \px[k - 1]{k + 1} \\
 &= \px{x}(1 + \sum_{k = 2}^{\infty}\px[k - 1]{k + 1}) \\
 &= \px{x}(1 + e_{x + 1})
@@ -108,6 +107,21 @@ $$
 \end{aligned}
 $$
 
-If we evaluate the derivative using the chain rule, we see that the derivative of $\px[t]{x}$ at a certain $x$ is scaled by a factor of $(\mu_{x} - \mu_{x + t} )$. Writing these concepts as such provides more insight on the role of the force of mortality, $\mu$, as the negative, scaled, instantaneous rate of change in the survival function $S_{0}$ at a particular $x$.
+If we evaluate the derivative using the chain rule, we see that the derivative of $\px[t]{x}$ at a certain $x$ is just $\px[t]{x}$ scaled by a factor of $(\mu_{x} - \mu_{x + t} )$. Writing these concepts as such provides more insight on the role of the force of mortality, $\mu$, as the negated, unit-scaled, instantaneous rate of change in the survival function $S_{0}$ at a particular $x$.
 
-## 2.18a
+## 2.18
+
+### a.
+
+$$
+\begin{aligned}
+\px[t]{x}^{*}  &=(\px[t]{x})^{2} \\ \\
+\px[t]{x}^{*}  &= exp(- \int_{0}^{t} \mu_{x + s}^{*}ds) \\
+&= exp(- \int_{0}^{t} 2 \mu_{x + s}ds) \\
+&= exp(- 2 \int_{0}^{t} \mu_{x + s}ds) \\
+&= \left(exp(-\int_{0}^{t} \mu_{x + s}^{}ds)\right)^2 \\
+&= (\px[t]{x})^{2}
+\end{aligned}
+$$
+
+We begin by substituting $\mu_{x + s}^{*} = 2 \mu_{x + s}$ into our expression. From there, we can extract the factor of 2 and rearrange to where the exponentiated term is itself raised to the power of 2. From there, the definiton of $\mu_{x + s}$ follows and we see that the linear doubling of the force of mortality translates into a quadratic squaring of the survival function.
