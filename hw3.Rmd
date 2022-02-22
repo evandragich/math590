@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 $$
 \begin{aligned}
-e_{x} &= \px{x}(1 + e_{x + 1}) \\
+e_{x} &= \px{x}(1 + e_{x + 1}) \\ \\
 e_{x} &= \sum_{k = 1}^{\infty} \px[k]{x} \\
 &= \px{x} + \sum_{k = 2}^{\infty}\px{x} \times \px[k - 1]{k + 1} \\
 &= \px{x}(1 + \sum_{k = 2}^{\infty}\px[k - 1]{k + 1}) \\
@@ -44,7 +44,7 @@ We can find one-year survival probability values, $\px[1]{x}$, by rearranging th
 
 ### a.
 
-The survival function $S_{x}(t)$ is defined as the complement of the distribution function $F_{x}t$. Thus, we can simply subtract from 1 to arrive at  $S_{x}(t)$
+The survival function $S_{0}(t)$ is defined as the complement of the distribution function $F_{0}t$. Thus, we can simply subtract from 1 to arrive at  $S_{0}(t)$
 
 $$
 \begin{aligned}
@@ -87,9 +87,9 @@ We can treat this expression as an infinite sum, and evaluate as such. The first
 
 ### d.
 
-No, I do not believe this is reasonable to model mortality. The associated survival function initially sharply decreases, before gradually levelling off as age approaches infinity. This is due to the constate force of mortality $\mu_{x} = \lambda$.
+No, I do not believe this is reasonable to model mortality. The associated survival function initially sharply decreases, before gradually levelling off as age approaches infinity. This is due to the constant force of mortality $\mu_{x} = \lambda$.
 
-However, this is contrary to the phenomenon of human mortality, where death does not begin to pick up at a significant rate until later in life. Thus, we would want to choose a survival function that more appropriately models the force of mortality as increasing over age, and thus would include $x$ in the expression for $\mu_{x}$ such as the Gompertz or Makeham.
+However, this is contrary to the observed phenomenon of human mortality, where death does not begin to pick up at a significant rate until later in life. Thus, we would want to choose a survival function that more appropriately models the force of mortality as increasing over age, and thus would include $x$ in the expression for $\mu_{x}$ such as the Gompertz or Makeham.
 
 
 
@@ -124,4 +124,4 @@ $$
 \end{aligned}
 $$
 
-We begin by substituting $\mu_{x + s}^{*} = 2 \mu_{x + s}$ into our expression. From there, we can extract the factor of 2 and rearrange to where the exponentiated term is itself raised to the power of 2. From there, the definiton of $\mu_{x + s}$ follows and we see that the linear doubling of the force of mortality translates into a quadratic squaring of the survival function.
+We begin by substituting $\mu_{x + s}^{*} = 2 \mu_{x + s}$ into our expression. From there, we can extract the factor of 2 and rearrange to where the exponentiated term is itself raised to the power of 2. From there, the definiton of $\mu_{x + s}$ follows and we see that the doubling of the force of mortality translates into a squaring of the survival function.
