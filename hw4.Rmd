@@ -1,0 +1,59 @@
+---
+title: "Homework 4"
+author: "Evan Dragich"
+date: 15 March 2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 4.4
+
+### a
+
+$$
+\begin{aligned}
+NPV &= -1000 \times exp(-0.06 \times 0) - 600 \times exp(-0.06 \times 2) + 1750 \times exp(-0.06 \times 1) \\ 
+&= -1000 -600 \times 0.8869204 + 1750 \times 0.9417645 \\
+&= -1000 -532.1522 + 1648.088 \\
+&= 115.9358 \\ \\
+&= \$ 115.94
+\end{aligned}
+$$
+
+
+### b
+
+$$
+\begin{aligned}
+NPV &= -1000 \times 1 - 600 \times 1.04^{-1} \times 1.055^{-2} + 1750 \times 1.04^{-1} \\ 
+&= -1000 - 600 \times 0.9114109 + 1750 \times 0.9615385 \\
+&= -1000 - 546.8465 + 1682.692 \\
+&= 135.8455 \\ \\
+&= \$ 135.85
+\end{aligned}
+$$
+
+## 4.5
+
+
+
+## 4.7
+
+
+
+## 4.9
+
+
+
+## 5.4
+
+
+
+## 5.9
+
+
+
+## 5.13
