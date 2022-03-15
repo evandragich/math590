@@ -3,10 +3,16 @@ title: "Homework 4"
 author: "Evan Dragich"
 date: 15 March 2022"
 output: pdf_document
+header-includes:
+  - \usepackage{actuarialsymbol}
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(jrvFinance)
+library(tidyverse)
+library(gt)
 ```
 
 ## 4.4
@@ -38,22 +44,101 @@ $$
 
 ## 4.5
 
+Code help from documentation of `jrvfinance` [package link](https://cran.r-project.org/web/packages/jrvFinance/index.html) .
 
+```{r}
+cf <- tibble(year = seq(0, 4, 1),
+             contribution = c(10000,1000,1000,0,0),
+             income = c(1550, 500, 500, 200, 200),
+             withdrawal = c(0, 0 , 3000, 7000, 7000)) %>%
+  mutate(net = withdrawal - contribution - income)
+
+irr(cf$net)
+```
+
+From the above calculation, we have an IRR of $4.622 \%$
 
 ## 4.7
 
-
+The impossible IRR is (a), which is greater than $-1$. According to the text: *Thus, $IRR = \frac{1}{v} - 1 = 11.66\%$. Note that $v < 0$ implies $IRR < -1$, i.e., the loss is larger  than 100%, which will be precluded from consideration. We discard this from the possible solutions to the polynomial equation created when solving for $IRR$.
 
 ## 4.9
 
-
+$$
+\begin{aligned}
+TWRR &= \left(1 + \frac{2200-2000}{2000}\right)\left(1 + \frac{3500-4200}{4200}\right) - 1 \\
+&= \left(\frac{11}{10}\right)\left(\frac{5}{6}\right) - 1 \\
+&= 0.9166667 - 1 \\
+&= -0.0833 \\
+&= -8.33\%
+\end{aligned}
+$$
 
 ## 5.4
 
+### Prospective
 
+Since the payments are not level, we can use the prospective method by simply discounting the remaining payments to the time $t = 2$.
+
+$$
+\begin{aligned}
+B_{2} &= -3000 \times  {(1.05^2)}^{-1} \\
+&= -3000 \times 0.9070295 \\
+&= -2721.089 \\
+&= -\$2271.09
+\end{aligned}
+$$
+
+### Retrospective
+
+Begin by calculating $L = B_{0}$.
+
+$$
+\begin{aligned}
+B_{0} &= -1000 \times {(1.05^2)}^{-1} - 2000 \times  {(1.05^2)}^{-2} - 3000 \times {(1.05^2)}^{-3} \\
+&= -907.0295 - 1645.405 - 2238.646 \\
+&= -4791.081 \\
+&= L
+\end{aligned}
+$$
+
+Thus, the accumulated loan amount $L(1 + i)^m$ at the time of interest, $2$, is $-4791.081 \times 1.05^4 = -5823.589$. From this, we add the accumulated payments at t = 2, which is $1000 \times 1.05^2 + 2000 \times 1.05^0 = 3102.5$ and arrive at $$-5823.589 + 3102.500 = -2721.089$$, the same answer as calculated via the prospective method.
 
 ## 5.9
 
+We first find $P$ by:
+
+$$
+\begin{aligned}
+5000 &= P \times 1.07^-1 + 0.95P \times 1.07^{-2} \times 0.95^{2} \times 1.07^{-3} + 0.95^{3}P \times 1.07^{-4} \\
+&=P (3.155142) \\
+P &= \$1584.72
+\end{aligned}
+$$
+
+```{r}
+tibble(Year = seq(0, 4),
+       Installment = c(NA_integer_, 1584.715, 1505.479, 1430.205, 1358.695),
+       `Interest Paid` = c(NA_integer_, 350, 263.57, 176.6363, 88.88649),
+       `Principle Repaid` = c(NA_integer_, 1234.715, 1241.909, 1253.569, 1269.809),
+        `Outstanding Balance` = c(5000, 3765.285, 2523.376, 1269.807, 0)) %>%
+  mutate(across(2:5, ~ if_else(!is.na(.x), paste0("$", map_dbl(.x, round, digits = 2)), 
+                               as.character(.x)))) %>%
+  gt()
+```
 
 
-## 5.13
+## 5.13 
+
+We can convert this given value for $B_{5}$ into a multiple of $\ax{\angl{n - t}i}$. Then, we know the overall loan amount is the same value times $\ax{\angl{n}i}$
+
+$$
+\begin{aligned}
+\ax{\angl{n - t}i} &= \ax{\angl{10 - 5}i} \\
+&= \ax{\angl{5}i} \\
+&= \ax{\angl{5}0.09} \\
+&= 3.889651
+\end{aligned}
+$$
+
+Thus, if $B_{5} = \$30,304.29$, we have $30,304.29 = (3.889651)(7791.005) = (\ax{\angl{5}0.09})(7791.005)$, and can calculate the loan balance $B_{0} = (\ax{\angl{10}0.09})(7791.005) = (6.417658)(7791.005) = \$50,000.00$. Finally, using our knowledge of amortization tables, the interest portion in the third payment $I_{3} = (i)(\ax{\angl{n - 3 + 1}0.09})(7791.005) = (0.09)(5.534819)(7791.005) = \$3,880.96$.
