@@ -1,0 +1,228 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\title{Homework 3}
+\author{Evan Dragich}
+\date{22 February 2022}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Homework 3},
+  pdfauthor={Evan Dragich},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{actuarialsymbol}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\begin{document}
+\maketitle
+
+\hypertarget{section}{%
+\subsection{2.2}\label{section}}
+
+\[
+\begin{aligned}
+e_{x} &= \px{x}(1 + e_{x + 1}) \\ \\
+e_{x} &= \sum_{k = 1}^{\infty} \px[k]{x} \\
+&= \px{x} + \sum_{k = 2}^{\infty}\px{x} \times \px[k - 1]{k + 1} \\
+&= \px{x}(1 + \sum_{k = 2}^{\infty}\px[k - 1]{k + 1}) \\
+&= \px{x}(1 + e_{x + 1})
+\end{aligned}
+\]
+
+Thus, by removing the first term from the sum and rewriting, we have
+found an alternate form to express \(e_{x}\).
+
+\[
+\begin{aligned}
+e_{60} &= \px{60}(1 + e_{61}) \\ 
+\px{x} &= \frac{e_{x}}{(1 + e_{x + 1})} \\\\
+\px{60} &= \frac{e_{60}}{(1 + e_{61})} = \frac{15.96}{16.27} \\
+\px{61} &= \frac{e_{61}}{(1 + e_{62})} = \frac{15.27}{15.60} \\
+\px{62} &= \frac{e_{62}}{(1 + e_{63})} = \frac{14.60}{14.94} \\ \\ \\
+\px[3]{60} &= \px[1]{60} \times \px[1]{61} \times \px[1]{62} \\
+&= \frac{15.96}{16.27} \times \frac{15.27}{15.60} \times \frac{14.60}{14.94} \\ 
+&= 0.93834
+\end{aligned}
+\]
+
+We can find one-year survival probability values, \(\px[1]{x}\), by
+rearranging the above formula and plugging in our given \(e_{x}\)
+values. Then, we can express \(\px[3]{x}\) as the product of three
+sequential \(\px[1]{x}\) probabilities, arriving at
+\(\px[3]{60} = 0.93834\).
+
+\hypertarget{section-1}{%
+\subsection{2.7}\label{section-1}}
+
+\hypertarget{a.}{%
+\subsubsection{a.}\label{a.}}
+
+The survival function \(S_{0}(t)\) is defined as the complement of the
+distribution function \(F_{0}t\). Thus, we can simply subtract from 1 to
+arrive at \(S_{0}(t)\)
+
+\[
+\begin{aligned}
+S_{0}(t) &= 1 - F_{0}t \\
+&= 1 - (1 - e^{-\lambda t}) \\
+&= e^{-\lambda t}
+\end{aligned}
+\]
+
+\hypertarget{b.}{%
+\subsubsection{b.}\label{b.}}
+
+\[
+\begin{aligned}
+\mu_{x} &= \lim_{dx \rightarrow 0^{+}} \frac{F_{0}(x + dx) - F_{0} (x)}{dx(1 - F_{0}(x))} \\
+&= \frac{F'_{0}(x)}{(1 - F_{0}(x))} \\
+&= \frac{f_{0}(x)}{S_{0}(x)} \\
+&= \frac{-S'_{0}(x)}{S_{0}(x)} \\
+&= - \frac{d}{dx} ln(S_{0}(x))\\
+&= - \frac{d}{dt} ln(e^{-\lambda t}) \\
+&= - \frac{d}{dt} (- \lambda t) \\
+&= \lambda
+\end{aligned}
+\]
+
+We can derive \(\mu_{x}\), the force of mortality, as the negative
+natural logarithm of the survival function, which is \(\lambda\) in this
+case.
+
+\hypertarget{b.-1}{%
+\subsubsection{b.}\label{b.-1}}
+
+\[
+\begin{aligned}
+e_{x} &= \sum_{k = 1}^{\infty} \px[k]{t} \\
+&= \sum_{k = 1}^{\infty} S_{x}(k) \\
+&= \sum_{k = 1}^{\infty} e^{-\lambda k} \\
+&= \frac{e^{-\lambda}}{1 - e^{-\lambda}} \\
+&= \frac{1}{e^{\lambda}- 1} 
+\end{aligned}
+\]
+
+We can treat this expression as an infinite sum, and evaluate as such.
+The first term, when \(k = 1\), is \(e^{-\lambda}\), with a common ratio
+of \(e^{-\lambda}\). For this sum to converge,
+\(\mid e^{-\lambda k}\mid < 1\), which is achieved when \(\lambda > 0\).
+Then, we can evaluate and arrive at
+\(e_{x} = \frac{1}{e^{\lambda}- 1}\).
+
+\hypertarget{d.}{%
+\subsubsection{d.}\label{d.}}
+
+No, I do not believe this is reasonable to model mortality. The
+associated survival function initially sharply decreases, before
+gradually levelling off as age approaches infinity. This is due to the
+constant force of mortality \(\mu_{x} = \lambda\).
+
+However, this is contrary to the observed phenomenon of human mortality,
+where death does not begin to pick up at a significant rate until later
+in life. Thus, we would want to choose a survival function that more
+appropriately models the force of mortality as increasing over age, and
+thus would include \(x\) in the expression for \(\mu_{x}\) such as the
+Gompertz or Makeham.
+
+\hypertarget{section-2}{%
+\subsection{2.9}\label{section-2}}
+
+\[
+\begin{aligned}
+\frac{d}{dx} \px[t]{x} &= \px[t]{x} (\mu_{x} - \mu_{x + t}) \\ \\
+\frac{d}{dx} \px[t]{x} &=  \frac{d}{dt}(S_{x}(t)) \\
+&= \frac{d}{dt}exp(- \int_{0}^{t} \mu_{x + s}ds) \\
+&= -(\mu_{x + t} - \mu_{x}) \times exp(- \int_{0}^{t} \mu_{x + s}ds) \\
+&= (\mu_{x} - \mu_{x + t} ) \times exp(- \int_{0}^{t} \mu_{x + s}ds) \\
+&= (\mu_{x} - \mu_{x + t} ) \times S_{x}(t) \\
+&= \px[t]{x} (\mu_{x} - \mu_{x + t} )
+\end{aligned}
+\]
+
+If we evaluate the derivative using the chain rule, we see that the
+derivative of \(\px[t]{x}\) at a certain \(x\) is just \(\px[t]{x}\)
+scaled by a factor of \((\mu_{x} - \mu_{x + t} )\). Writing these
+concepts as such provides more insight on the role of the force of
+mortality, \(\mu\), as the negated, unit-scaled, instantaneous rate of
+change in the survival function \(S_{0}\) at a particular \(x\).
+
+\hypertarget{section-3}{%
+\subsection{2.18}\label{section-3}}
+
+\hypertarget{a.-1}{%
+\subsubsection{a.}\label{a.-1}}
+
+\[
+\begin{aligned}
+\px[t]{x}^{*}  &=(\px[t]{x})^{2} \\ \\
+\px[t]{x}^{*}  &= exp(- \int_{0}^{t} \mu_{x + s}^{*}ds) \\
+&= exp(- \int_{0}^{t} 2 \mu_{x + s}ds) \\
+&= exp(- 2 \int_{0}^{t} \mu_{x + s}ds) \\
+&= \left(exp(-\int_{0}^{t} \mu_{x + s}^{}ds)\right)^2 \\
+&= (\px[t]{x})^{2}
+\end{aligned}
+\]
+
+We begin by substituting \(\mu_{x + s}^{*} = 2 \mu_{x + s}\) into our
+expression. From there, we can extract the factor of 2 and rearrange to
+where the exponentiated term is itself raised to the power of 2. From
+there, the definiton of \(\mu_{x + s}\) follows and we see that the
+doubling of the force of mortality translates into a squaring of the
+survival function.
+
+\end{document}

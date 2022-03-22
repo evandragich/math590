@@ -10,9 +10,7 @@ header-includes:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-library(jrvFinance)
 library(tidyverse)
-library(gt)
 ```
 
 ## 4.4
@@ -21,124 +19,79 @@ library(gt)
 
 $$
 \begin{aligned}
-NPV &= -1000 \times exp(-0.06 \times 0) - 600 \times exp(-0.06 \times 2) + 1750 \times exp(-0.06 \times 1) \\ 
-&= -1000 -600 \times 0.8869204 + 1750 \times 0.9417645 \\
-&= -1000 -532.1522 + 1648.088 \\
-&= 115.9358 \\ \\
-&= \$ 115.94
+\actsymb{A}{x:\angl{10}}[(4)1] \leq \actsymb{A}{x:\angl{10}}[(4)] < \actsymb{A}{x:\angl{10}}[(12)]  < \actsymb{\bar{A}}{x:\angl{10}} < A_{x}  < \bar{A}_{x}
 \end{aligned}
 $$
 
 
-### b
+The largest terms are those whole life insurances, which have larger expected present values as there is no term restriction unlike the others. Of these two whole insurances, the "bar" $\bar{A}_{x}$ is larger, as it represents the continuous payment case vs at the end of the year; this distributes more of the death probabiltity weight closer to the present, and thus increases its value. 
 
-$$
-\begin{aligned}
-NPV &= -1000 \times 1 - 600 \times 1.04^{-1} \times 1.055^{-2} + 1750 \times 1.04^{-1} \\ 
-&= -1000 - 600 \times 0.9114109 + 1750 \times 0.9615385 \\
-&= -1000 - 546.8465 + 1682.692 \\
-&= 135.8455 \\ \\
-&= \$ 135.85
-\end{aligned}
-$$
+Of the next group of 3 endowment functions, identical in term structure and only varying in payment date, we find that again the bar is the greatest, followed by (12) and (4). This makes sense as again, the continuous case is the largest as it puts the most probabilty weight closest to the present, folowed by the more frequent monthly payments (12) which are closer to approximating the continuous case than the quarterly(4). 
+
+Finally, the final function $\actsymb{A}{x:\angl{10}}[(4)1]$ represents the pure endowment component of the previous function $\actsymb{A}{x:\angl{10}}[(4)]$, as given by formula 4.20. 
 
 ## 4.5
 
-Code help from documentation of `jrvfinance` [package link](https://cran.r-project.org/web/packages/jrvFinance/index.html) .
+Begin by calculating $1.05^{-x}$ for each $x$ in $\{1 \dots 5\}$, representing the discount factor for each year of the insurance's term. Note that only $1.05^{-1}$ and $1.05^{-2}$ evaluate to greater than $0.9$, thus generating a present value for the \$100,000 benefit that is greater than \$90,000 to satisfy the problem's criterion. 
 
-```{r}
-cf <- tibble(year = seq(0, 4, 1),
-             contribution = c(10000,1000,1000,0,0),
-             income = c(1550, 500, 500, 200, 200),
-             withdrawal = c(0, 0 , 3000, 7000, 7000)) %>%
-  mutate(net = withdrawal - contribution - income)
+Looking at the life table, we see we can sum $\actsymb[1]{q}{65}$, the probability of a death within the next year for a life currently at 65, and , $\actsymb[1]{p}{65} \times \actsymb[1]{q}{66}$, the probability of a death exactly 1 year from now for a life currently at 65.
 
-irr(cf$net)
-```
-
-From the above calculation, we have an IRR of $4.622 \%$
+Thus, we calculate $\actsymb{q}{65} + \actsymb{p}{65} \times \actsymb{q}{66} = 0.0059147 + 0.9940853 \times 0.0066185 = 0.01249405$.
 
 ## 4.7
 
-The impossible IRR is (a), which is greater than $-1$. According to the text: *Thus, $IRR = \frac{1}{v} - 1 = 11.66\%$. Note that $v < 0$ implies $IRR < -1$, i.e., the loss is larger  than 100%, which will be precluded from consideration. We discard this from the possible solutions to the polynomial equation created when solving for $IRR$.
+We begin by looking for the critical value of $t$ that would produce an EPV of \$20,000 or less, corresponding to a discount factor of 0.4 ($\frac{20000}{50000}$(. Since this is the continuous case, we can consider values between integers. We find: 
+
+$$
+\begin{aligned}
+1.04^{-t} &\leq 0.4\\
+-t \times log(1.04) &\leq log(0.4) \\
+-t &\leq \frac{log(0.4)}{log(1.04)} \\
+&\geq 23.362
+\end{aligned}
+$$
+
+Thus, an individual must survive $23.362$ years or greater beyond age 50 to have an EPV of benefit lower than the desired threshold. We can express this and evaluate as: 
+
+$$
+\begin{aligned}
+\actsymb[23]{p}{50} \times \actsymb[0.362]{p}{73} &= \frac{l_{73}}{l_{50}} \times (1 - \actsymb[0.362]{q}{73}) \\ &= \frac{87,916.84}{98,576.37} \times (1 - \actsymb[0.362]{q}{73}) \\ &= 0.8918653 \times (1 - 0.362 \times \actsymb{q}{73}) \\ &= 0.8918653 \times 0.9946856 \\ &= 0.8871256
+\end{aligned}
+$$
+
 
 ## 4.9
 
-$$
-\begin{aligned}
-TWRR &= \left(1 + \frac{2200-2000}{2000}\right)\left(1 + \frac{3500-4200}{4200}\right) - 1 \\
-&= \left(\frac{11}{10}\right)\left(\frac{5}{6}\right) - 1 \\
-&= 0.9166667 - 1 \\
-&= -0.0833 \\
-&= -8.33\%
-\end{aligned}
-$$
+Begin by decomposing $A_{x}$ into its components $\actsymb{A}{50:\angl{20}}[1]$ and $\actsymb[20]{E}{50} A_{70}$, which represent the expected benefit during the 20-year term and the expected benefit at 70 multiplied by the expected value of the pure endowment associated with completion of the 20-year term. Rearranging, we get $A_{70} = \frac{A_{50} - \actsymb{A}{50:\angl{20}}[1]}{\actsymb[20]{E}{50}}$.
+
+We also know that this EPV of the pure endowment, $\actsymb[20]{E}{50}$, is the difference between two of our given values, the expected value of the whole assurance $\actsymb{A}{50:\angl{20}}$ and the component that is paid during the term $\actsymb{A}{50:\angl{20}}[1]$. Thus, $\actsymb[20]{E}{50} = \actsymb{A}{50:\angl{20}} - \actsymb{A}{50:\angl{20}}[1] = 0.42247 - 0.14996 = 0.27251$.
+
+This gives us all necessary values to evaluate for $A_{70} = \frac{A_{50} - \actsymb{A}{50:\angl{20}}[1]}{\actsymb[20]{E}{50}} = \frac{0.31266 - 0.14996}{0.27251} = 0.59704$
 
 ## 5.4
 
-### Prospective
+We can find the value of $\actsymb{\ddot{a}}{x:\angl{10}}$ as 6 by subtracting $\actsymb[10 \mid]{\ddot{a}}{50:\angl{20}}[1] = 4$ from $\actsymb{\ddot{a}}{x} = 10$, as $10 - 4 = 6$. 
 
-Since the payments are not level, we can use the prospective method by simply discounting the remaining payments to the time $t = 2$.
+Then, converting this annuity to a life insurance, we find $\actsymb{A}{x:\angl{10}} = 1 - d \times \actsymb{\ddot{a}}{x:\angl{10}}$.Since $d$, the discount factor, is $1 - v = 1 - 0.94 = 0.06$, we find $\actsymb{A}{x:\angl{10}} = 1 - 0.06 \times 6 = 1 - 0.36 = 0.64$.
 
-$$
-\begin{aligned}
-B_{2} &= -3000 \times  {(1.05^2)}^{-1} \\
-&= -3000 \times 0.9070295 \\
-&= -2721.089 \\
-&= -\$2271.09
-\end{aligned}
-$$
-
-### Retrospective
-
-Begin by calculating $L = B_{0}$.
-
-$$
-\begin{aligned}
-B_{0} &= -1000 \times {(1.05^2)}^{-1} - 2000 \times  {(1.05^2)}^{-2} - 3000 \times {(1.05^2)}^{-3} \\
-&= -907.0295 - 1645.405 - 2238.646 \\
-&= -4791.081 \\
-&= L
-\end{aligned}
-$$
-
-Thus, the accumulated loan amount $L(1 + i)^m$ at the time of interest, $2$, is $-4791.081 \times 1.05^4 = -5823.589$. From this, we add the accumulated payments at t = 2, which is $1000 \times 1.05^2 + 2000 \times 1.05^0 = 3102.5$ and arrive at $$-5823.589 + 3102.500 = -2721.089$$, the same answer as calculated via the prospective method.
+Finally, as we have shown before, $\actsymb{A}{x:\angl{10}}$ is comprised of the pure endowment $\actsymb[10]{E}{x} = 0.375$ and the desired term value $\actsymb{A}{x:\angl{10}}[1]$. Subtracting, $\actsymb{A}{x:\angl{10}}[1] = \actsymb{A}{x:\angl{10}} - \actsymb[10]{E}{x} \rightarrow \actsymb{A}{x:\angl{10}}[1] = 0.64 - 0.375 = 0.265$.
 
 ## 5.9
 
-We first find $P$ by:
+First, find the EPV of the annuity at issue, which we know to be $\actsymb{\ddot{a}}{50} = \frac{1 - A_{50}}{d} = \frac{1 - 0.18931}{0.0476} = 17.0313$ from consulting the standard life table and the given value for $d = \frac{i}{1 + i} = \frac{0.05}{1.05} = 0.0476$.
 
-$$
-\begin{aligned}
-5000 &= P \times 1.07^-1 + 0.95P \times 1.07^{-2} \times 0.95^{2} \times 1.07^{-3} + 0.95^{3}P \times 1.07^{-4} \\
-&=P (3.155142) \\
-P &= \$1584.72
-\end{aligned}
-$$
-
-```{r}
-tibble(Year = seq(0, 4),
-       Installment = c(NA_integer_, 1584.715, 1505.479, 1430.205, 1358.695),
-       `Interest Paid` = c(NA_integer_, 350, 263.57, 176.6363, 88.88649),
-       `Principle Repaid` = c(NA_integer_, 1234.715, 1241.909, 1253.569, 1269.809),
-        `Outstanding Balance` = c(5000, 3765.285, 2523.376, 1269.807, 0)) %>%
-  mutate(across(2:5, ~ if_else(!is.na(.x), paste0("$", map_dbl(.x, round, digits = 2)), 
-                               as.character(.x)))) %>%
-  gt()
-```
-
+With \$1 paid per year and no regard for discounting, we need for there to be 18 years of payment in order to be greater than the above calculated value, as this is the discrete case. This 18th payment will occur at $t = 67$, given that the first is at $t = 50$ due to this being an annuity due. Thus, we find the number of lives at $t = 67$ and divide by the lives at $t = 50$ to get a probability that someone who is 50 lives to 67, and thus receives the 18th payment from this annuity due, which pushes the total over the EPV at issue. This value is  $\frac{l_{67}}{l_{50}} = \frac{93,398.05}{98576.37} = 0.94747$
 
 ## 5.13 
 
-We can convert this given value for $B_{5}$ into a multiple of $\ax{\angl{n - t}i}$. Then, we know the overall loan amount is the same value times $\ax{\angl{n}i}$
+We know the expectation of an individual's present value is $E(individual) = 100 \times \actsymb{\ddot{a}}{x} = \$1,301.704$. We also have the formula for the variance of this value, but must find $A_{x}$ at each of $i = 0.04, 0.0816$ which is $1 - d \times \actsymb{\ddot{a}}{x}$. For each of $i = 0.04, 0.0816$, this is $1 - \frac{0.04}{1.04} \times 13.01704 = 0.4993446$ and $1 - \frac{0.0816}{1.0816} \times 9.59176 = 0.2763613$. 
 
-$$
-\begin{aligned}
-\ax{\angl{n - t}i} &= \ax{\angl{10 - 5}i} \\
-&= \ax{\angl{5}i} \\
-&= \ax{\angl{5}0.09} \\
-&= 3.889651
-\end{aligned}
-$$
+These values $0.04, 0.0816$ are not coincidental, as $8.16\%$ represents the annual effective interest when a rate of $4\%$ is applied semiannually (ie. $1.0816 = (1.04)^{2}$). This relationship allows for us to calculate the variance quite nicely, as $\actsymb[][2]{A}{x}$ is the value for $\actsymb{A}{x}$ with double the force of interest of $4\%$, the desired interest rate from the problem statement. Thus, as calculated above, $\actsymb{A}{x} = 0.4993446$ and $\actsymb[][2]{A}{x} = 0.2763613$
 
-Thus, if $B_{5} = \$30,304.29$, we have $30,304.29 = (3.889651)(7791.005) = (\ax{\angl{5}0.09})(7791.005)$, and can calculate the loan balance $B_{0} = (\ax{\angl{10}0.09})(7791.005) = (6.417658)(7791.005) = \$50,000.00$. Finally, using our knowledge of amortization tables, the interest portion in the third payment $I_{3} = (i)(\ax{\angl{n - 3 + 1}0.09})(7791.005) = (0.09)(5.534819)(7791.005) = \$3,880.96$.
+From there, the variance formula gives $Var = \frac{\actsymb[][2]{A}{x} - \actsymb{A}{x}[2]}{d^2} = \frac{0.2763613 - {0.4993446}^2}{(0.04/1.04)^2} = \frac{0.0270163}{0.00147929} = 18.26302$, which we scale by $100^{2}$ (the $Var$ operator does not behave linearly with respect to coefficients) to get $Var(individual) = \$182,630.20$
+
+With the expectation $E(individual) = 1301.704$ and variance $Var(individual) = 186230.2$ for each individual, we can combine them to find the distribution of the population's mean. This sum distribution is centered at $E(Y) = 200 * E(individual) = 260,340.80$. Variances are also added, with covariance terms ignored due to the specified independence, and $Var(Y) = 200 * Var(individual) = 36526040$. We can square root this for $SD(Y) = \sqrt{Var(Y)} = 6043.678$.
+
+We know that for the sum's Normal distribution, the upper Z-bound at which the value is expected to be less than or equal 90% is Z = 1.282. (ie. this is where 10% of the total probability is left in the right tail) Converting this Z to a value in context gives $E(Y) + 1.282 \times SD(Y) = 260,340.80 + 1.282 \times 6043.678 = 260,340.80 + 7747.995 = 268088.8$. 
+
+Thus, to ensure that we can pay off the sum of the 200 realized benefits with 90% certainty, we should deposit $268,088.80$ now.
