@@ -1,0 +1,253 @@
+Attribute VB_Name = "DragichHW6Macros"
+Sub solution1()
+
+    'reset mortality to indiivudal case
+    
+    Sheets("Calc").Select
+    Range("Y5").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC[-23], Mort!R2C1:R116C4, 3, FALSE)/12"
+    Range("Y5").Select
+    Selection.AutoFill Destination:=Range("Y5:Y720"), Type:=xlFillDefault
+    
+    ' reset q column to be non-cohort
+    
+    Range("Q5").Select
+    ActiveCell.Formula = "=IF(F5<Input!$B$23,0,1)"
+    Range("Q5").Select
+    Selection.AutoFill Destination:=Range("Q5:Q720"), Type:=xlFillDefault
+    
+    ' loop over 25 scenarios, store vals
+    
+    Dim Cell As Range
+    
+    
+    For Each Cell In Sheets("Result").Range("B3:B27")
+        Sheets("Fund Return").Range("F2").Value = Cell.Value
+        Cell.Offset(0, 1).Value = Evaluate("Calc!AB2")
+        Cell.Offset(0, 2).Value = Evaluate("Calc!AC2")
+    Next Cell
+    
+    Sheets("Result").Select
+    Range("E3").Select
+    ActiveCell.FormulaR1C1 = "=(RC[-2] - RC[-1])"
+    Range("E3").Select
+    Selection.AutoFill Destination:=Range("E3:E27"), Type:=xlFillDefault
+    Range("D28").Select
+    ActiveCell.Value = "Question 1: Expected PV of profit"
+    Range("E28").Select
+    ActiveCell.Formula = "=AVERAGE(E3:E27)"
+    Range("E2").Select
+    ActiveCell.Value = "PV of profit"
+
+End Sub
+Sub solution2()
+
+
+    
+    
+    ' reset mortality to spousal
+    
+    Sheets("Calc").Select
+    Range("Y5").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC[-23], Mort!R2C1:R116C4, 4, FALSE)/12"
+    Range("Y5").Select
+    Selection.AutoFill Destination:=Range("Y5:Y720"), Type:=xlFillDefault
+    Range("Y5:Y720").Select
+    
+    ' reset q column to be non-cohort
+    
+    Range("Q5").Select
+    ActiveCell.Formula = "=IF(F5<Input!$B$23,0,1)"
+    Range("Q5").Select
+    Selection.AutoFill Destination:=Range("Q5:Q720"), Type:=xlFillDefault
+    
+    ' loop over 25 scenarios, manually update value for test values
+    
+    Dim Cell As Range
+    
+    Sheets("Result").Select
+    
+    Range("G2").Value = "Scen #"
+    Range("H2").Value = "PV rider fee"
+    Range("I2").Value = "PV claim"
+    Range("J2").Value = "PV profit"
+    
+    
+    For i = 2080 To 2090
+    
+    
+        For Each Cell In Sheets("Result").Range("B3:B27")
+            Sheets("Fund Return").Range("F2").Value = Cell.Value
+            Cell.Offset(0, 5).Value = Cell.Value
+            Cell.Offset(0, 6).Value = Evaluate("Calc!AB2")
+            Cell.Offset(0, 7).Value = Evaluate("Calc!AC2")
+        Next Cell
+        
+        
+        Sheets("Input").Range("B12").Value = (i / 1000) & "%"
+    
+        Sheets("Result").Select
+        Range("J3").FormulaR1C1 = "=(RC[-2] - RC[-1])"
+        Range("J3").Select
+        Selection.AutoFill Destination:=Range("J3:J27"), Type:=xlFillDefault
+        Range("J28").Formula = "=AVERAGE(J3:J27)"
+        Range("K" & (i - 2077)).Value = Evaluate("J28")
+        Range("L" & (i - 2077)).Value = (i / 1000) & "%"
+        
+    Next i
+    
+
+End Sub
+Sub solution3()
+
+    
+    
+    'reset mortality to indiivudal case
+    
+    Sheets("Calc").Select
+    Range("Y5").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC[-23], Mort!R2C1:R116C4, 3, FALSE)/12"
+    Range("Y5").Select
+    Selection.AutoFill Destination:=Range("Y5:Y720"), Type:=xlFillDefault
+    
+    ' reset q column to be non-cohort
+    
+    Range("Q5").Select
+    ActiveCell.Formula = "=IF(F5<Input!$B$23,0,1)"
+    Range("Q5").Select
+    Selection.AutoFill Destination:=Range("Q5:Q720"), Type:=xlFillDefault
+    
+     ' create GMDB stuff
+    
+    Range("X3").Value = "Discounted GMDB"
+    Range("X5").Formula = "=125000 * U5 * Y5"
+    Range("X5").Select
+    Selection.AutoFill Destination:=Range("X5:X123"), Type:=xlFillDefault
+    Range("X2").Formula = "=SUM(X5:X123)"
+    Range("X1").Value = "PV"
+
+    
+    ' loop over 25 scenarios, manually update value for test values
+    
+    Dim Cell As Range
+    
+    Sheets("Result").Select
+    
+    Range("N2").Value = "Scen #"
+    Range("O2").Value = "PV rider fee"
+    Range("P2").Value = "PV claim"
+    Range("Q2").Value = "PV GMDB"
+    Range("R2").Value = "PV profit"
+    
+    
+    For i = 1435 To 1450 Step 1
+    
+    
+        For Each Cell In Sheets("Result").Range("B3:B27")
+            Sheets("Fund Return").Range("F2").Value = Cell.Value
+            Cell.Offset(0, 12).Value = Cell.Value
+            Cell.Offset(0, 13).Value = Evaluate("Calc!AB2")
+            Cell.Offset(0, 14).Value = Evaluate("Calc!AC2")
+            Cell.Offset(0, 15).Value = Evaluate("Calc!X2")
+        Next Cell
+        
+        
+        Sheets("Input").Range("B12").Value = (i / 1000) & "%"
+    
+        Sheets("Result").Select
+        Range("R3").FormulaR1C1 = "=(RC[-3] - RC[-2] - RC[-1])"
+        Range("R3").Select
+        Selection.AutoFill Destination:=Range("R3:R27"), Type:=xlFillDefault
+        Range("R28").Formula = "=AVERAGE(R3:R27)"
+        Range("S" & (i - 1432)).Value = Evaluate("R28")
+        Range("T" & (i - 1432)).Value = (i / 1000) & "%"
+        
+    Next i
+    
+
+End Sub
+Sub solution4()
+
+ ' create lookup table
+ 
+ Dim Start As Range
+ 
+ Set Start = Sheets("Input").Range("B32")
+ 
+    Start.Value = 0
+    Start.Offset(1, 0).Value = 60
+    Start.Offset(2, 0).Value = 120
+    Start.Offset(3, 0).Value = 180
+    Start.Offset(4, 0).Value = 240
+    Start.Offset(0, 1).Value = 0 & "%"
+    Start.Offset(1, 1).Value = 10 & "%"
+    Start.Offset(2, 1).Value = 70 & "%"
+    Start.Offset(3, 1).Value = 90 & "%"
+    Start.Offset(4, 1).Value = 100 & "%"
+    
+Sheets("Calc").Select
+    
+    Range("Q4").Select
+    Selection.AutoFill Destination:=Range("Q4:Q720"), Type:=xlFillDefault
+    Range("Q4:Q720").Select
+    
+' replace binary withdrawal with this distribution
+    Sheets("Calc").Select
+    Range("Q4").Select
+    ActiveCell.FormulaR1C1 = _
+        "=VLOOKUP(MIN(FLOOR(RC[-11],60),240), Input!R32C2:R36C3, 2)"
+    Range("Q4").Select
+    Selection.AutoFill Destination:=Range("Q4:Q720"), Type:=xlFillDefault
+    Range("Q4:Q720").Select
+    
+    
+' replace if statement with product for claim to accomodate distribution
+    
+    Range("R5").Select
+    ActiveCell.FormulaR1C1 = "=RC[-1]*R[-1]C[-3]*RC[-2]/12"
+    Range("R5").Select
+    Selection.AutoFill Destination:=Range("R5:R720"), Type:=xlFillDefault
+    
+    Sheets("Input").Range("B12").Value = 1 & "%"
+    
+' reset back to 55 yo single F life
+    
+    Sheets("Calc").Select
+    Range("Y5").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC[-23], Mort!R2C1:R116C4, 3, FALSE)/12"
+    Range("Y5").Select
+    Selection.AutoFill Destination:=Range("Y5:Y720"), Type:=xlFillDefault
+    
+    Sheets("Result").Select
+    
+    Range("V2").Value = "Scen #"
+    Range("W2").Value = "PV rider fee"
+    Range("X2").Value = "PV claim"
+    Range("Y2").Value = "PV profit"
+    
+     ' fill da sheets
+    
+    Dim Cell As Range
+    
+    For Each Cell In Sheets("Result").Range("B3:B27")
+        Sheets("Fund Return").Range("F2").Value = Cell.Value
+        Cell.Offset(0, 20).Value = Cell.Value
+        Cell.Offset(0, 21).Value = Evaluate("Calc!AB2")
+        Cell.Offset(0, 22).Value = Evaluate("Calc!AC2")
+    Next Cell
+    
+    Sheets("Result").Select
+    Range("Y3").Select
+    ActiveCell.FormulaR1C1 = "=(RC[-2] - RC[-1])"
+    Range("Y3").Select
+    Selection.AutoFill Destination:=Range("Y3:Y27"), Type:=xlFillDefault
+    Range("X28").Select
+    ActiveCell.Value = "Question 4: Expected PV of profit with Cohorts"
+    Range("Y28").Select
+    ActiveCell.Formula = "=AVERAGE(X3:X27)"
+
+
+
+End Sub
+
+
